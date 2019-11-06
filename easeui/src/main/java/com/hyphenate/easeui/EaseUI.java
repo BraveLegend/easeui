@@ -169,6 +169,27 @@ public final class EaseUI {
             public void onMessageChanged(EMMessage message, Object change) {
                 
             }
+
+            @Override
+            public void onNoticeList(Map<String, String> usersMap) {
+
+            }
+
+            @Override
+            public void onContactStatusChanged(Map<String, String> userStatusMap) {
+
+            }
+
+            @Override
+            public void onQueryUserStatusList(Map<String, String> userStatusMap) {
+
+            }
+
+            @Override
+            public void onAllContactsStatusList(Map<String, String> userStatusMap) {
+
+            }
+
             @Override
             public void onCmdMessageReceived(List<EMMessage> messages) {
                 for (EMMessage message : messages) {
@@ -198,7 +219,7 @@ public final class EaseUI {
     
     /**
      * set user profile provider
-     * @param provider
+     * @param userProvider
      */
     public void setUserProfileProvider(EaseUserProfileProvider userProvider){
         this.userProvider = userProvider;

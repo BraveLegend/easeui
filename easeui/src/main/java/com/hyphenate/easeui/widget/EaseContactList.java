@@ -126,5 +126,8 @@ public class EaseContactList extends RelativeLayout {
         }
     }
 
+    public void notifyUserStatusChanged(){
+        adapter.notifyUserStatusChanged();
+    }
 
 }
