@@ -19,12 +19,14 @@ import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.domain.EaseAvatarOptions;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.model.EasePreferenceManager;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseImageView;
 import com.hyphenate.util.EMLog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements SectionIndexer{
     private static final String TAG = "ContactAdapter";
@@ -37,6 +39,7 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
     private int res;
     private MyFilter myFilter;
     private boolean notiyfyByFilter;
+    private EasePreferenceManager preferenceManager;
 
     public EaseContactAdapter(Context context, int resource, List<EaseUser> objects) {
         super(context, resource, objects);
@@ -45,12 +48,14 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
         copyUserList = new ArrayList<EaseUser>();
         copyUserList.addAll(objects);
         layoutInflater = LayoutInflater.from(context);
+        preferenceManager = EasePreferenceManager.getInstance();
     }
     
     private static class ViewHolder {
         ImageView avatar;
         TextView nameView;
         TextView headerView;
+        TextView userStatus;
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -64,6 +69,8 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
             holder.avatar = (ImageView) convertView.findViewById(R.id.avatar);
             holder.nameView = (TextView) convertView.findViewById(R.id.name);
             holder.headerView = (TextView) convertView.findViewById(R.id.header);
+            holder.userStatus = convertView.findViewById(R.id.signature);
+            holder.userStatus.setVisibility(View.VISIBLE);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
@@ -84,6 +91,17 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
             }
         } else {
             holder.headerView.setVisibility(View.GONE);
+        }
+
+        Set<String> beNoticeUsers = preferenceManager.getNoticeUsers();
+        if (beNoticeUsers != null && beNoticeUsers.contains(username)) {
+            if (preferenceManager.getNoticeUserStatus(username)) {
+                holder.userStatus.setText("在线");
+            } else {
+                holder.userStatus.setText("离线");
+            }
+        } else {
+            holder.userStatus.setText("未收到");
         }
 
         EaseAvatarOptions avatarOptions = EaseUI.getInstance().getAvatarOptions();
@@ -235,7 +253,13 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
             }
         }
     }
-    
+
+    /**
+     * 通知用户状态改变
+     */
+    public void notifyUserStatusChanged() {
+        notifyDataSetChanged();
+    }
     
     @Override
     public void notifyDataSetChanged() {

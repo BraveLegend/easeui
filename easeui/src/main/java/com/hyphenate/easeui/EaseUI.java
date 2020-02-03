@@ -170,6 +170,27 @@ public final class EaseUI {
             public void onMessageChanged(EMMessage message, Object change) {
                 
             }
+
+            @Override
+            public void onNoticeList(Map<String, String> usersMap) {
+
+            }
+
+            @Override
+            public void onContactStatusChanged(Map<String, String> userStatusMap) {
+
+            }
+
+            @Override
+            public void onQueryUserStatusList(Map<String, String> userStatusMap) {
+
+            }
+
+            @Override
+            public void onAllContactsStatusList(Map<String, String> userStatusMap) {
+
+            }
+
             @Override
             public void onCmdMessageReceived(List<EMMessage> messages) {
 

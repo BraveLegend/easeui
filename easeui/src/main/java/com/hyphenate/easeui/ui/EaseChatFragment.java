@@ -66,6 +66,7 @@ import com.hyphenate.util.PathUtil;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -763,6 +764,26 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         if(isMessageListInited) {
             messageList.refresh();
         }
+    }
+
+    @Override
+    public void onNoticeList(Map<String, String> usersMap) {
+
+    }
+
+    @Override
+    public void onContactStatusChanged(Map<String, String> userStatusMap) {
+
+    }
+
+    @Override
+    public void onQueryUserStatusList(Map<String, String> userStatusMap) {
+
+    }
+
+    @Override
+    public void onAllContactsStatusList(Map<String, String> userStatusMap) {
+
     }
 
     @Override
